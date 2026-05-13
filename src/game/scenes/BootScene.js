@@ -16,6 +16,7 @@ export class BootScene extends Phaser.Scene {
     }
 
     create() {
+        this.scene.launch('HUDScene');
         this.scene.start('LoadingScene');
     }
 }

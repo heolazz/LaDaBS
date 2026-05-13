@@ -20,11 +20,25 @@ export default function PhaserGame({ onGameReady }) {
 
         gameRef.current = new Phaser.Game(config);
 
+        // Listener untuk rotasi mobile agar scale di-hitung ulang
+        const handleResize = () => {
+            if (gameRef.current) {
+                setTimeout(() => {
+                    gameRef.current.scale.refresh();
+                }, 300); // Delay sedikit agar browser selesai render bar navigasi
+            }
+        };
+
+        window.addEventListener('orientationchange', handleResize);
+        window.addEventListener('resize', handleResize);
+
         if (onGameReady) {
             onGameReady(gameRef.current);
         }
 
         return () => {
+            window.removeEventListener('orientationchange', handleResize);
+            window.removeEventListener('resize', handleResize);
             if (gameRef.current) {
                 gameRef.current.destroy(true);
                 gameRef.current = null;

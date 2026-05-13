@@ -6,7 +6,8 @@ import { BedroomScene } from './scenes/BedroomScene';
 import { StreetScene } from './scenes/StreetScene';
 import { SchoolScene } from './scenes/SchoolScene'; // <--- Import Kelas
 import { CorridorScene } from './scenes/CorridorScene'; // <--- Import Lorong
-import { EndingScene } from './scenes/EndingScene'; // <--- Import Ending
+import { EndingScene } from './scenes/EndingScene';
+import { HUDScene } from './scenes/HUDScene';
 
 export const GAME_CONFIG = {
     type: Phaser.AUTO,
@@ -14,7 +15,8 @@ export const GAME_CONFIG = {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 1280,
-        height: 720
+        height: 720,
+        orientation: Phaser.Scale.LANDSCAPE
     },
     backgroundColor: '#0a0a0f',
     parent: 'game-container',
@@ -32,7 +34,8 @@ export const GAME_CONFIG = {
         BedroomScene,
         StreetScene,
         SchoolScene, // <--- Daftar Kelas
-        CorridorScene, // <--- Daftar Lorong Sore
-        EndingScene  // <--- Daftar Ending (Tamat)
+        CorridorScene,
+        EndingScene,
+        HUDScene
     ]
 };

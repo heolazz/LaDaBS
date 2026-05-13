@@ -29,6 +29,11 @@ export class MainMenuScene extends Phaser.Scene {
         startBtn.on('pointerover', () => startBtn.setColor('#ffffff'));
         startBtn.on('pointerout', () => startBtn.setColor('#aaccff'));
         startBtn.on('pointerup', () => {
+            // Trigger Fullscreen on mobile
+            if (!this.scale.isFullscreen) {
+                this.scale.startFullscreen();
+            }
+            
             this.cameras.main.fadeOut(800, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.start('BedroomScene');
@@ -46,10 +51,10 @@ export class MainMenuScene extends Phaser.Scene {
         });
 
         // Footer text
-        this.add.text(width / 2, height - 40, 'Tekan tombol untuk melanjutkan', {
+        this.add.text(width / 2, height - 40, 'Klik "Mulai" untuk Fullscreen Otomatis', {
             fontFamily: 'monospace',
             fontSize: '13px',
-            color: '#444466'
+            color: '#aaccff'
         }).setOrigin(0.5);
 
         // ==========================================
@@ -76,6 +81,11 @@ export class MainMenuScene extends Phaser.Scene {
                 .on('pointerover', () => btn.setBackgroundColor('#556688'))
                 .on('pointerout', () => btn.setBackgroundColor('#334466'))
                 .on('pointerdown', () => {
+                    // Trigger Fullscreen
+                    if (!this.scale.isFullscreen) {
+                        this.scale.startFullscreen();
+                    }
+
                     this.cameras.main.fadeOut(500, 0, 0, 0);
                     this.cameras.main.once('camerafadeoutcomplete', () => {
                         // Reset game state saat loncat level biar interaksi ke-reset
@@ -85,6 +95,11 @@ export class MainMenuScene extends Phaser.Scene {
                         this.scene.start(scn.target);
                     });
                 });
+        });
+
+        // Keyboard support for Fullscreen (Desktop)
+        this.input.keyboard.on('keydown-F', () => {
+            this.scale.toggleFullscreen();
         });
 
         EventBus.emit('current-scene-ready', this);
