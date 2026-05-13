@@ -14,9 +14,20 @@ export default function PauseUI() {
             }
         };
 
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                togglePause();
+            }
+        };
+
         EventBus.on('current-scene-ready', onSceneReady);
-        return () => EventBus.off('current-scene-ready', onSceneReady);
-    }, []);
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            EventBus.off('current-scene-ready', onSceneReady);
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [currentScene, isPaused]); // Tambahkan dependency agar closure togglePause tetap fresh
 
     const togglePause = () => {
         if (!currentScene) return;

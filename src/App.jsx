@@ -32,9 +32,19 @@ export default function App() {
         const handler = () => setIsFullscreen(!!document.fullscreenElement);
         document.addEventListener('fullscreenchange', handler);
         document.addEventListener('webkitfullscreenchange', handler);
+
+        // Shortcut Keyboard Global
+        const handleKeyDown = (e) => {
+            if (e.key.toLowerCase() === 'f') {
+                handleFullscreen();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+
         return () => {
             document.removeEventListener('fullscreenchange', handler);
             document.removeEventListener('webkitfullscreenchange', handler);
+            window.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
 
